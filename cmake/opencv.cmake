@@ -19,7 +19,6 @@ endif()
 
 set(OPENCV_LIBS
     calib3d
-    dnn
     features2d
     imgproc 
     core
