@@ -138,6 +138,8 @@ cd ~/wire-os-victor
 <summary><strong>(Docker: x86_64 or arm64 Linux) or (macOS M-series)</strong></summary>
 <br \>
 
+# macOS BUILDING IS NOT WORKING AT THE MOMENT. THIS WILL BE FIXED SOON.
+
 - Run:
 
 ```
