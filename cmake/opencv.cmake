@@ -22,13 +22,10 @@ set(OPENCV_LIBS
     features2d
     imgproc 
     core
-    highgui
     objdetect
-    video
     flann
     imgcodecs
-    ml
-    videoio)
+    ml)
 
 # Static libs for mac, shared for android
 set(LIB_EXT a)
