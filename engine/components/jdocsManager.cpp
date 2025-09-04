@@ -1598,6 +1598,7 @@ void JdocsManager::HandleThingResponse(const JDocs::ThingResponse& thingResponse
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 void JdocsManager::SubmitJdocToCloud(const external_interface::JdocType jdocTypeKey, const bool isJdocNewInCloud)
 {
+  LOG_ERROR("is", "this something we are doing");
   auto& jdocItem = _jdocs[jdocTypeKey];
   jdocItem._cloudDirty = false;
 
@@ -1663,6 +1664,7 @@ void JdocsManager::SubmitJdocToCloud(const external_interface::JdocType jdocType
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 void JdocsManager::SendJdocsChangedMessage(const std::vector<external_interface::JdocType>& jdocTypes)
 {
+  LOG_ERROR("DOING", "DOING");
   if (_robot->HasGatewayInterface())
   {
     LOG_INFO("JdocsManager.SendJdocsChangedMessage", "Signaling app for %zu jdocs changed",
