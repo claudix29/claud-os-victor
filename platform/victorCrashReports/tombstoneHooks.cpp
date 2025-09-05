@@ -30,13 +30,6 @@ namespace {
 const std::list<int> gHookSignals = { SIGILL, SIGABRT, SIGBUS, SIGFPE, SIGSEGV, SIGQUIT };
 std::unordered_map<int, struct sigaction> gHookStash;
 
-static pid_t gettid() { return static_cast<pid_t>(syscall(SYS_gettid)); }
-static int tgkill(pid_t tgid, pid_t tid, int sig) {
-#if defined(SYS_tgkill)
-  return static_cast<int>(syscall(SYS_tgkill, tgid, tid, sig));
-#else
-  return -1;
-#endif
 }
 
 static ssize_t safe_write_all(int fd, const void* buf, size_t len) {
@@ -109,11 +102,7 @@ static void child_symbolize_and_log(int fd, uintptr_t const* frames, int nframes
       if (info.dli_sname) symname = info.dli_sname;
     }
 
-    char namebuf[256];
-    size_t offset = 0;
-    int got_unw_name = 0;
     {
-      unw_word_t off = 0;
       unw_cursor_t cursor;
       unw_context_t uc;
       if (unw_getcontext(&uc) >= 0 &&
@@ -174,8 +163,6 @@ static void DebuggerHook(int signum, siginfo_t* info, void* /*ctx*/) {
     }
   }
 
-  pid_t pid_self = getpid();
-  pid_t tid = gettid();
     auto it = gHookStash.find(signum);
     if (it != gHookStash.end()) {
         sigaction(signum, &it->second, nullptr);
@@ -208,7 +195,6 @@ static void UninstallTombstoneHook(int signum) {
   if (pos != gHookStash.end()) {
     sigaction(signum, &pos->second, nullptr);
   }
-}
 
 }
 
