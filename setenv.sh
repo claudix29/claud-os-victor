@@ -9,6 +9,7 @@ alias victor_restart="cd ${GIT_PROJ_ROOT} && ${GIT_PROJ_ROOT}/project/victor/scr
 alias victor_start="cd ${GIT_PROJ_ROOT} && ${GIT_PROJ_ROOT}/project/victor/scripts/victor_start.sh"
 alias victor_stop="cd ${GIT_PROJ_ROOT} && ${GIT_PROJ_ROOT}/project/victor/scripts/victor_stop.sh"
 alias victor_stage="cd ${GIT_PROJ_ROOT} && ${GIT_PROJ_ROOT}/project/victor/scripts/stage.sh"
+alias watch_backtraces="cd ${GIT_PROJ_ROOT} && echo Waiting for backtraces... && python3 project/victor/scripts/backtracewatcher.py"
 
 alias victor_build_release="cd ${GIT_PROJ_ROOT} && ${GIT_PROJ_ROOT}/project/victor/scripts/victor_build_release.sh"
 alias victor_deploy_run="cd ${GIT_PROJ_ROOT} && ${GIT_PROJ_ROOT}/project/victor/scripts/victor_deploy_run.sh"
@@ -28,3 +29,4 @@ alias vdeploy='IS_ROBOT_IP_THERE; victor_deploy_run'
 alias vbd='victor_build_release && victor_deploy_run'
 alias stage='victor_stage'
 alias see_size_of_silly_victor_build='victor_stage && du -sh _build/staging'
+alias wbtrace='watch_backtraces'

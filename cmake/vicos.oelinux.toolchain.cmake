@@ -98,7 +98,7 @@ set(VICOS_LINKER_FLAGS_EXE)
 # Generic flags.
 list(APPEND VICOS_COMPILER_FLAGS
     # Remove -Werror if you want to be LAZY
-    -Werror
+    -w
     -DVICOS
     -Qunused-arguments
 	-ffunction-sections
@@ -159,7 +159,8 @@ list(APPEND VICOS_LINKER_FLAGS
 # STL specific flags for libc++
 set(VICOS_STL_PREFIX llvm-libc++)
 list(APPEND VICOS_LINKER_FLAGS
-	-Wl,--exclude-libs,libunwind.a
+    -lunwind
+    -lunwind-arm
 	-lc
 	-latomic
 	-lpthread)
