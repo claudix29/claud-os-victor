@@ -8,11 +8,9 @@ import (
 	"net"
 	"net/http"
 	"os"
-	"os/signal"
 	"runtime"
 	"runtime/debug"
 	"strings"
-	"syscall"
 	"time"
 
 	extint "github.com/digital-dream-labs/vector-cloud/internal/proto/external_interface"
@@ -140,15 +138,6 @@ func cleanExit() {
 }
 
 func mainGateway() {
-
-	signalHandlerGateway = make(chan os.Signal, 1)
-	signal.Notify(signalHandlerGateway, syscall.SIGTERM)
-	go func() {
-		sig := <-signalHandlerGateway
-		log.Println("Received signal:", sig)
-		cleanExit()
-	}()
-
 	if _, err := os.Stat(robot.GatewayCert); os.IsNotExist(err) {
 		log.Println("Cannot find cert:", robot.GatewayCert)
 		os.Exit(1)
