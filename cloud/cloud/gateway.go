@@ -37,7 +37,7 @@ const (
 
 var (
 	robotHostname          string
-	signalHandler          chan os.Signal
+	signalHandlerGateway   chan os.Signal
 	demoKeyPair            *tls.Certificate
 	demoCertPool           *x509.CertPool
 	cloudCheckLimiter      *MultiLimiter
@@ -139,17 +139,12 @@ func cleanExit() {
 	os.Exit(0)
 }
 
-func main() {
-	log.Tag = "vic-gateway"
-	log.Println("Launching vic-gateway")
+func mainGateway() {
 
-	log.Println("Install crash reporter")
-	robot.InstallCrashReporter("vic-gateway")
-
-	signalHandler = make(chan os.Signal, 1)
-	signal.Notify(signalHandler, syscall.SIGTERM)
+	signalHandlerGateway = make(chan os.Signal, 1)
+	signal.Notify(signalHandlerGateway, syscall.SIGTERM)
 	go func() {
-		sig := <-signalHandler
+		sig := <-signalHandlerGateway
 		log.Println("Received signal:", sig)
 		cleanExit()
 	}()
