@@ -11,7 +11,6 @@ if (VICOS)
   target_compile_options(update-engine
     PRIVATE
     -Wno-unused-result
-    -Wno-unused-function
   )
 
   target_include_directories(update-engine

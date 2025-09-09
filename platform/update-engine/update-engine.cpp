@@ -310,6 +310,15 @@ static std::map<std::string, std::map<std::string, std::string>> parse_ini(const
   return ret;
 }
 
+static bool should_inhibit()
+{
+  if (file_exists("/anki-devtools") || file_exists("/data/data/user-do-not-auto-update") || file_exists("/etc/do-not-auto-update"))
+  {
+    return true;
+  }
+  return false;
+}
+
 static std::string get_slot_name(const std::string &partition, char slot)
 {
   if (slot == 'f')
@@ -467,7 +476,8 @@ int main(int argc, char **argv)
   if (url.empty())
   {
     url = getenv("UPDATE_ENGINE_URL");
-    if (url.empty()) {
+    if (url.empty())
+    {
       std::cerr << "usage: update-engine [-v] <url|auto>\n";
       return 2;
     }
@@ -475,6 +485,9 @@ int main(int argc, char **argv)
 
   if (url == "auto")
   {
+    if (should_inhibit()) {
+      die(200, "auto-update inhibited");
+    }
     url = construct_auto_update_url();
     if (url.empty())
     {
