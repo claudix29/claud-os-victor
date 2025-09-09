@@ -763,6 +763,10 @@ int main(int argc, char **argv)
   cmd += target_slot;
   system(cmd.c_str());
 
+  if (url == "auto") {
+    system("/sbin/reboot");
+  }
+
   ::unlink(ERROR_FILE);
   write_status(DONE_FILE, "1");
   write_status(PHASE_FILE, "done");
