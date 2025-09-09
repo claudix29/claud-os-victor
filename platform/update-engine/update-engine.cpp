@@ -466,8 +466,11 @@ int main(int argc, char **argv)
   }
   if (url.empty())
   {
-    std::cerr << "usage: update-engine [-v] <url|auto>\n";
-    return 2;
+    url = getenv("UPDATE_ENGINE_URL");
+    if (url.empty()) {
+      std::cerr << "usage: update-engine [-v] <url|auto>\n";
+      return 2;
+    }
   }
 
   if (url == "auto")
