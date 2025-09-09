@@ -310,7 +310,7 @@ static std::map<std::string, std::map<std::string, std::string>> parse_ini(const
   return ret;
 }
 
-static bool should_inhibit()
+bool should_inhibit()
 {
   if (file_exists("/anki-devtools") || file_exists("/data/data/user-do-not-auto-update") || file_exists("/etc/do-not-auto-update"))
   {
@@ -475,11 +475,13 @@ int main(int argc, char **argv)
   }
   if (url.empty())
   {
-    url = getenv("UPDATE_ENGINE_URL");
-    if (url.empty())
+    const char* env = getenv("UPDATE_ENGINE_URL");
+    if (env)
     {
-      std::cerr << "usage: update-engine [-v] <url|auto>\n";
-      return 2;
+      url = env;
+    } else {
+      std::cout << "performing auto-update...\n";
+      url = "auto";
     }
   }
 
