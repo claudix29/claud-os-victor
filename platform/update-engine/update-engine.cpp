@@ -500,6 +500,8 @@ int main(int argc, char **argv)
       std::cout << "auto-constructed URL: " << url << std::endl;
     }
   }
+  
+  system("/usr/bin/rm -rf /run/update-engine");
 
   append_device_info_to_url(url);
   if (verbose)
