@@ -7,3 +7,6 @@ CompileFlags:
     - HOME_REPLACE/.anki/vicos-sdk/dist/5.3.0-r07/sysroot/usr/include
     - -isystem
     - HOME_REPLACE/.anki/vicos-sdk/dist/5.3.0-r07/sysroot/usr/local/include
+Diagnostics:
+  Suppress:
+    - unused-includes

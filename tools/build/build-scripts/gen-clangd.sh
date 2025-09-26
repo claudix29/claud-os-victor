@@ -6,5 +6,6 @@ export GIT_PROJ_ROOT="$(
 )"
 
 cd "${GIT_PROJ_ROOT}"
-cp tools/build/build-scripts/clang-template .clangd
+echo '#DO NOT MODIFY THIS FILE. IF YOU WANT DIFFERENT DIAGNOSTICS, MODIFY tools/build/build-tools/clangd-template, then rebuild' > .clangd
+cat tools/build/build-scripts/clangd-template >> .clangd
 sed -i "s|HOME_REPLACE|$HOME|g" .clangd
