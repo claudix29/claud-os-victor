@@ -1,6 +1,3 @@
-# Testing branch
-I'll test here features that i could include in the main branch
-
 # WireOS - /anki folder
 
 **This is where the personality code for WireOS exists.**
