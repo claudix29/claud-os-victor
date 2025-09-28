@@ -34,7 +34,7 @@ CONSOLE_VAR_RANGED(int, kSleepTracker_moning_hour, CONSOLE_GROUP, 7, 0, 23);
 CONSOLE_VAR_RANGED(int, kSleepTracker_moning_minute, CONSOLE_GROUP, 0, 0, 59);
 
 // NOTE: Because of a lazy developer, night time must be before midnight
-CONSOLE_VAR_RANGED(int, kSleepTracker_night_hour, CONSOLE_GROUP, 21, 0, 23);
+CONSOLE_VAR_RANGED(int, kSleepTracker_night_hour, CONSOLE_GROUP, 23, 0, 23);
 CONSOLE_VAR_RANGED(int, kSleepTracker_night_minute, CONSOLE_GROUP, 0, 0, 59);
 
 // gain sleep debt at this rate when awake
