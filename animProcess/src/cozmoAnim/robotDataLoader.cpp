@@ -187,13 +187,13 @@ void RobotDataLoader::LoadNonConfigData()
 
     
     if(_ankilights()){
-      const auto& fileInfo = animLoader.CollectAnimFiles({kPathToEngineBackpackLightsWireOS});
+      const auto& fileInfo = animLoader.CollectAnimFiles({kPathToEngineBackpackLightsAnki});
       LoadBackpackLightAnimations(fileInfo);
     } else if(_userlights()) {
       const auto& fileInfo = animLoader.CollectAnimFiles({kPathToEngineBackpackLightsUser});
       LoadBackpackLightAnimations(fileInfo);
     } else {
-      const auto& fileInfo = animLoader.CollectAnimFiles({kPathToEngineBackpackLightsAnki});
+      const auto& fileInfo = animLoader.CollectAnimFiles({kPathToEngineBackpackLightsWireOS});
       LoadBackpackLightAnimations(fileInfo);
     }
   }
