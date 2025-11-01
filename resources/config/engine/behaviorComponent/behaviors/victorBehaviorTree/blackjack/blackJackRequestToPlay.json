@@ -22,8 +22,8 @@
       "vocalPromptKey"                   : "BlackJack.PlayQuestion",
       "maxNumberOfReprompts"             : 0,
       "stopListeningOnIntents"           : true,
-      "playListeningGetIn"               : false,
-      "playListeningGetOut"              : false
+      "playListeningGetIn"               : true,
+      "playListeningGetOut"              : true
     }
   ]
 }
