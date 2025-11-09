@@ -958,34 +958,41 @@ void FaceInfoScreenManager::CheckForButtonEvent(const bool buttonPressed,
   const u32  curTime_ms           = BaseStationTimer::getInstance()->GetCurrentTimeStamp();
   const bool mightBeDoublePress = (lastPressTime_ms > 0) && (curTime_ms - lastPressTime_ms < kDoublePressWindow_ms);
   
+  // clx29
   const bool mightBeTriplePress = doublePressPending && mightBeDoublePress; 
 
 
   if (buttonPressedEvent) {
-    if (mightBeTriplePress) { //clx29
+    if (mightBeTriplePress) { //cl29
       lastPressTime_ms = 0;
       doublePressPending = false;
       singlePressPending = false;
       triplePressPending = true;  
-    } else if (mightBeDoublePress) {
-      lastPressTime_ms = curTime_ms; 
-      singlePressPending = false;
+    } else if (mightBeDoublePress) { 
+      lastPressTime_ms = curTime_ms;
+      doublePressPending = true;
+      singlePressPending = false; 
+    } else { 
       lastPressTime_ms = curTime_ms;
     }
-   
+    
+  
   } else if (buttonReleasedEvent) {
-    if (triplePressPending) { // clx29
+    if (triplePressPending) {  // clx29
         triplePressPending = false;
         triplePressDetected = true;
+      
     }
-    // clx29
-    else if (lastPressTime_ms > 0 && !doublePressPending) { // first release
+   
+    else if (lastPressTime_ms > 0 && !doublePressPending) { 
       singlePressPending = true;
     } 
-    
+
     shutdownSent = false;
 
-  } else if ((singlePressPending || doublePressPending) && !mightBeDoublePress) { //clx29 double press pending
+  } else if ((singlePressPending || doublePressPending) && !mightBeDoublePress) { //clx29
+    
+    
     if (doublePressPending) { 
         doublePressDetected = true; 
         doublePressPending = false;
@@ -994,11 +1001,13 @@ void FaceInfoScreenManager::CheckForButtonEvent(const bool buttonPressed,
         singlePressPending = false;
     }
 
-    // reset
+    // Reset
     lastPressTime_ms = 0;
+
   }
 
   // Check if button was held down long enough for shutdown animation to start
+
   const bool shouldTriggerShutdown = buttonPressed && 
                                      (lastPressTime_ms > 0) && 
                                      (curTime_ms - lastPressTime_ms > kButtonPressDurationForShutdown_ms) &&
@@ -1017,6 +1026,7 @@ void FaceInfoScreenManager::CheckForButtonEvent(const bool buttonPressed,
   }
  
 #if ANKI_DEV_CHEATS
+
   if( kFakeButtonPressType == 1 ) { // single press
     singlePressDetected = true;
     kFakeButtonPressType = 0;
