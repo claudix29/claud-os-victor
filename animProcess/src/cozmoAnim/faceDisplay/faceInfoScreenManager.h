@@ -247,6 +247,8 @@ private:
 
   std::string _sysconVersion = "";
   
+  bool _isMuted = false; // Amy (hamsteronpotato)
+
   // Reboot Linux
   void Reboot();
 
