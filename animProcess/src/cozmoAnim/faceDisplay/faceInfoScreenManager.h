@@ -92,6 +92,7 @@ public:
 
   // turn mute on or off (reason sent to DAS)
   void ToggleMute(const std::string& reason);
+  void ToggleSpeakerMute(const std::string& reason); // Emily (Switch_modder)
   
   void StartAlexaNotification();
 
@@ -191,6 +192,7 @@ private:
   void DrawCustomText();
   void DrawAlexaFace();
   void DrawMuteAnimation();
+  void DrawSpeakerMuteAnimation(); // Emily (Switch_modder)
   void DrawAlexaNotification();
   
   // Draw the _scratchDrawingImg to the face
@@ -247,7 +249,7 @@ private:
 
   std::string _sysconVersion = "";
   
-  bool _isMuted = false; // Amy (hamsteronpotato)
+  bool _isSpeakerMuted = false; // Amy (hamsteronpotato) && // Emily (Switch_modder)
 
   // Reboot Linux
   void Reboot();
