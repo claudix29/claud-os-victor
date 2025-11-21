@@ -68,7 +68,7 @@
 // CHANGE THIS TO BE YOUR PROJECT'S STUFF
 const std::string OSProject = "ClaudOS";
 const std::string Creator = "By Claudix29";
-const std::string CreatorWebsite = "github.com/claudix29";
+const std::string CreatorWebsite = "claudix.my.to";
 
 // Log options
 #define LOG_CHANNEL    "FaceInfoScreenManager"
