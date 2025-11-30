@@ -58,6 +58,7 @@ CONSOLE_VAR(bool, kSuppressTriggerResponse, RECOGNIZER_CONSOLE_GROUP, false);
 #endif // ANKI_DEV_CHEATS
 
 const std::string kMicSettingsFile = "micMuted";
+const std::string kSpeakerSettingsFile = "speakerMuted"; //claudix29
 const std::string kSpeechRecognizerWebvizName = "speechrecognizersys";
 }
 
@@ -175,6 +176,9 @@ void MicDataSystem::Init(const Anim::RobotDataLoader& dataLoader)
   
   if( Util::FileUtils::FileExists(_persistentFolder + kMicSettingsFile) ) {
     ToggleMicMute();
+  }
+  if( Util::FileUtils::FileExists(_persistentFolder + kSpeakerSettingsFile) ) { //claudix29 make speakermute persist 
+    ToggleSpeakerMute();
   }
   
 #if ANKI_DEV_CHEATS
@@ -923,6 +927,14 @@ void MicDataSystem::ToggleSpeakerMute()
       bplComp->SetMicMute( _speakerMuted );
     }
   }
+// add/remove persistent file -claudix29 copied from above
+  const auto speakermuteFile = _persistentFolder + kSpeakerSettingsFile;
+  if( _speakerMuted ) {
+    Util::FileUtils::TouchFile( speakermuteFile );
+  } else if( Util::FileUtils::FileExists( speakermuteFile ) ) {
+    Util::FileUtils::DeleteFile( speakermuteFile );
+  }
+
 }
   
 void MicDataSystem::SetButtonWakeWordIsAlexa(bool isAlexa)
