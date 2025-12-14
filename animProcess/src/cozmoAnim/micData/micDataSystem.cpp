@@ -120,6 +120,7 @@ MicDataSystem::MicDataSystem(Util::Data::DataPlatform* dataPlatform,
 , _fftResultData(new FFTResultData())
 , _alexaState(AlexaSimpleState::Disabled)
 , _micMuted(false)
+, _speakerMuted(false)
 , _abortAlexaScreenDueToHeyVector(false)
 {
   const std::string& dataWriteLocation = dataPlatform->pathToResource(Util::Data::Scope::Cache, "micdata");
@@ -177,8 +178,12 @@ void MicDataSystem::Init(const Anim::RobotDataLoader& dataLoader)
   if( Util::FileUtils::FileExists(_persistentFolder + kMicSettingsFile) ) {
     ToggleMicMute();
   }
-  if( Util::FileUtils::FileExists(_persistentFolder + kSpeakerSettingsFile) ) { //claudix29 make speakermute persist 
-    ToggleSpeakerMute();
+  
+  if( Util::FileUtils::FileExists(_persistentFolder + kSpeakerSettingsFile) ) { //claudix29 make speakermute persist
+     ToggleSpeakerMute();
+     RobotInterface::UpdateVolume volume;
+     volume.volumeLevel = 0;
+     RobotInterface::SendAnimToEngine(volume);
   }
   
 #if ANKI_DEV_CHEATS
