@@ -11,6 +11,7 @@
 *
 */
 
+#include "cozmoAnim/faceDisplay/faceInfoScreenManager.h" //aded to make speaker mute persist -claudix29
 #include "coretech/messaging/shared/LocalUdpServer.h"
 #include "coretech/messaging/shared/socketConstants.h"
 
@@ -46,6 +47,9 @@
 
 #include <iomanip>
 #include <sstream>
+
+#include <thread> //claudix29
+#include <chrono> //claudix29
 
 namespace {
 #define LOG_CHANNEL "Microphones"
@@ -178,13 +182,19 @@ void MicDataSystem::Init(const Anim::RobotDataLoader& dataLoader)
   if( Util::FileUtils::FileExists(_persistentFolder + kMicSettingsFile) ) {
     ToggleMicMute();
   }
-  
+
   if( Util::FileUtils::FileExists(_persistentFolder + kSpeakerSettingsFile) ) { //claudix29 make speakermute persist
-     ToggleSpeakerMute();
-     RobotInterface::UpdateVolume volume;
-     volume.volumeLevel = 0;
-     RobotInterface::SendAnimToEngine(volume);
-  }
+    std::thread([]() { //needed so the audio system is fully up
+        std::this_thread::sleep_for(std::chrono::seconds(6)); 
+        Anki::Vector::FaceInfoScreenManager::getInstance()-> ToggleSpeakerMute("mute persisted through reboot");
+        Anki::Vector::FaceInfoScreenManager::getInstance()-> _isSpeakerMuted = true;
+        RobotInterface::UpdateVolume volume;
+        volume.volumeLevel = 0;
+        RobotInterface::SendAnimToEngine(volume);
+    }).detach();
+}
+  
+
   
 #if ANKI_DEV_CHEATS
   auto* webService = _context->GetWebService();
@@ -360,6 +370,9 @@ void MicDataSystem::RecordAudioInternal(uint32_t duration_ms, const std::string&
 }
 
 void MicDataSystem::Update(BaseStationTime_t currTime_nanosec)
+
+ 
+
 {
   _fftResultData->_fftResultMutex.lock();
   while (_fftResultData->_fftResultList.size() > 0)

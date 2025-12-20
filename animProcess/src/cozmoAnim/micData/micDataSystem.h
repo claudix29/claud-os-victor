@@ -27,6 +27,8 @@
 #include "clad/robotInterface/messageRobotToEngine.h"
 #include "clad/types/beatDetectorTypes.h"
 
+#include "cozmoAnim/faceDisplay/faceInfoScreenManager.h" //aded to make speaker mute persist -claudix29
+
 #include <cstdint>
 #include <deque>
 #include <list>
