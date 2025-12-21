@@ -11,6 +11,7 @@
 *
 */
 
+#include "cozmoAnim/faceDisplay/faceInfoScreenManager.h" //aded to make speaker mute persist -claudix29
 #include "coretech/messaging/shared/LocalUdpServer.h"
 #include "coretech/messaging/shared/socketConstants.h"
 
@@ -47,6 +48,9 @@
 #include <iomanip>
 #include <sstream>
 
+#include <thread> //claudix29
+#include <chrono> //claudix29
+
 namespace {
 #define LOG_CHANNEL "Microphones"
 #define CONSOLE_GROUP "MicData"
@@ -58,6 +62,7 @@ CONSOLE_VAR(bool, kSuppressTriggerResponse, RECOGNIZER_CONSOLE_GROUP, false);
 #endif // ANKI_DEV_CHEATS
 
 const std::string kMicSettingsFile = "micMuted";
+const std::string kSpeakerSettingsFile = "speakerMuted"; //claudix29
 const std::string kSpeechRecognizerWebvizName = "speechrecognizersys";
 }
 
@@ -119,6 +124,7 @@ MicDataSystem::MicDataSystem(Util::Data::DataPlatform* dataPlatform,
 , _fftResultData(new FFTResultData())
 , _alexaState(AlexaSimpleState::Disabled)
 , _micMuted(false)
+, _speakerMuted(false)
 , _abortAlexaScreenDueToHeyVector(false)
 {
   const std::string& dataWriteLocation = dataPlatform->pathToResource(Util::Data::Scope::Cache, "micdata");
@@ -176,6 +182,19 @@ void MicDataSystem::Init(const Anim::RobotDataLoader& dataLoader)
   if( Util::FileUtils::FileExists(_persistentFolder + kMicSettingsFile) ) {
     ToggleMicMute();
   }
+
+  if( Util::FileUtils::FileExists(_persistentFolder + kSpeakerSettingsFile) ) { //claudix29 make speakermute persist
+    std::thread([]() { //needed so the audio system is fully up
+        std::this_thread::sleep_for(std::chrono::seconds(6)); 
+        Anki::Vector::FaceInfoScreenManager::getInstance()-> ToggleSpeakerMute("mute persisted through reboot");
+        Anki::Vector::FaceInfoScreenManager::getInstance()-> _isSpeakerMuted = true;
+        RobotInterface::UpdateVolume volume;
+        volume.volumeLevel = 0;
+        RobotInterface::SendAnimToEngine(volume);
+    }).detach();
+}
+  
+
   
 #if ANKI_DEV_CHEATS
   auto* webService = _context->GetWebService();
@@ -351,6 +370,9 @@ void MicDataSystem::RecordAudioInternal(uint32_t duration_ms, const std::string&
 }
 
 void MicDataSystem::Update(BaseStationTime_t currTime_nanosec)
+
+ 
+
 {
   _fftResultData->_fftResultMutex.lock();
   while (_fftResultData->_fftResultList.size() > 0)
@@ -923,6 +945,14 @@ void MicDataSystem::ToggleSpeakerMute()
       bplComp->SetMicMute( _speakerMuted );
     }
   }
+// add/remove persistent file -claudix29 copied from above
+  const auto speakermuteFile = _persistentFolder + kSpeakerSettingsFile;
+  if( _speakerMuted ) {
+    Util::FileUtils::TouchFile( speakermuteFile );
+  } else if( Util::FileUtils::FileExists( speakermuteFile ) ) {
+    Util::FileUtils::DeleteFile( speakermuteFile );
+  }
+
 }
   
 void MicDataSystem::SetButtonWakeWordIsAlexa(bool isAlexa)

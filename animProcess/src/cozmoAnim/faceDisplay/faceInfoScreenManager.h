@@ -64,7 +64,9 @@ class FaceInfoScreenManager : public Util::DynamicSingleton<FaceInfoScreenManage
 public:
   FaceInfoScreenManager();
 
-  void Init(Anim::AnimContext* context, Anim::AnimationStreamer* animStreamer);
+  bool _isSpeakerMuted = false; // Amy (hamsteronpotato) && // Emily (Switch_modder) (made public for access in micDataSystem.cpp)
+
+  void Init(Anim::AnimContext* context, Anim::AnimationStreamer* animStreamer); 
   void Update(const RobotState& state);
   
   // Debug drawing is expected from only one thread
@@ -249,7 +251,7 @@ private:
 
   std::string _sysconVersion = "";
   
-  bool _isSpeakerMuted = false; // Amy (hamsteronpotato) && // Emily (Switch_modder)
+
 
   // Reboot Linux
   void Reboot();
