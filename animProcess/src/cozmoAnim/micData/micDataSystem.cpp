@@ -184,9 +184,9 @@ void MicDataSystem::Init(const Anim::RobotDataLoader& dataLoader)
   }
 
   if( Util::FileUtils::FileExists(_persistentFolder + kSpeakerSettingsFile) ) { //claudix29 make speakermute persist // Amy (hamsteronpotato) i have tweaked this a bit
-    std::thread([this]() { //needed so the audio system is fully up
+    std::thread([]() { //needed so the audio system is fully up
       std::this_thread::sleep_for(std::chrono::seconds(5)); 
-      ToggleSpeakerMute();
+      Anki::Vector::FaceInfoScreenManager::getInstance()->ToggleSpeakerMute("mute restored"); //show the mute anim on boot
       Anki::Vector::FaceInfoScreenManager::getInstance()-> _isSpeakerMuted = true;
       RobotInterface::ToggleMute muteMsg;
       RobotInterface::SendAnimToEngine(muteMsg);
