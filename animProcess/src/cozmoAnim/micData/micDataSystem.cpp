@@ -183,14 +183,13 @@ void MicDataSystem::Init(const Anim::RobotDataLoader& dataLoader)
     ToggleMicMute();
   }
 
-  if( Util::FileUtils::FileExists(_persistentFolder + kSpeakerSettingsFile) ) { //claudix29 make speakermute persist
-    std::thread([]() { //needed so the audio system is fully up
-        std::this_thread::sleep_for(std::chrono::seconds(6)); 
-        Anki::Vector::FaceInfoScreenManager::getInstance()-> ToggleSpeakerMute("mute persisted through reboot");
-        Anki::Vector::FaceInfoScreenManager::getInstance()-> _isSpeakerMuted = true;
-        RobotInterface::UpdateVolume volume;
-        volume.volumeLevel = 0;
-        RobotInterface::SendAnimToEngine(volume);
+  if( Util::FileUtils::FileExists(_persistentFolder + kSpeakerSettingsFile) ) { //claudix29 make speakermute persist // Amy (hamsteronpotato) i have tweaked this a bit
+    std::thread([this]() { //needed so the audio system is fully up
+      std::this_thread::sleep_for(std::chrono::seconds(6)); 
+      ToggleSpeakerMute();
+      Anki::Vector::FaceInfoScreenManager::getInstance()-> _isSpeakerMuted = true;
+      RobotInterface::ToggleMute muteMsg;
+      RobotInterface::SendAnimToEngine(muteMsg);
     }).detach();
 }
   
