@@ -173,7 +173,7 @@ std::chrono::hours BehaviorHowOldAreYou::GetRobotAge()
 
     // if(!parsed || !containsBoD) {
       // if not we couldn't get born on date from file, use modification time of the file
-      onboardingTime_sse = Util::FileUtils::GetFileLastModificationTime( "/data/vic-gateway/gateway.cert" ); // seconds since the epoch
+      onboardingTime_sse = Util::FileUtils::GetFileLastModificationTime( "/data/persist" ); // seconds since the epoch
       LOG_INFO("BehaviorHowOldAreYou.GetRobotAge.ModificationTimeFallback",
           "Using file modification time of vic-gateway certificate (seconds since epoch): %lld",
           onboardingTime_sse);
