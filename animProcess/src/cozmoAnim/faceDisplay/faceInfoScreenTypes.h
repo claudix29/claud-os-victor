@@ -13,6 +13,8 @@
 #ifndef __AnimProcess_CozmoAnim_FaceDisplay_FaceInfoScreenTypes_H_
 #define __AnimProcess_CozmoAnim_FaceDisplay_FaceInfoScreenTypes_H_
 
+#include "coretech/common/shared/types.h"
+#include <cstdint>
 namespace Anki {
 namespace Vector {
   
@@ -51,6 +53,7 @@ enum class ScreenName : uint8_t {
   ToggleSpeakerMute, // Emily (Switch_modder), Anim when muting and unmuting the speaker
   ToF,
   Kercre123,
+  ServerInformation,
   
   Count
 };
