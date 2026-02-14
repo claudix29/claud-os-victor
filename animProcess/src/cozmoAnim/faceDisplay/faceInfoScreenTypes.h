@@ -23,13 +23,14 @@ enum class ScreenName : uint8_t {
   None = 0,
   FAC  = 1, // Needs to be after None
 
-  Recovery,
+  Reonboard,
 
   Pairing,
     
   Main,
   ClearUserData,
   ClearUserDataFail,
+  ClearRebooting,
   Rebooting,
   SelfTest,
   SelfTestRunning,
@@ -52,6 +53,7 @@ enum class ScreenName : uint8_t {
   ToggleMute, // Quick animation to show change in microphone mute state
   ToggleSpeakerMute, // Emily (Switch_modder), Anim when muting and unmuting the speaker
   ToF,
+  UserDataSubmenu,
   Kercre123,
   ServerInformation,
   

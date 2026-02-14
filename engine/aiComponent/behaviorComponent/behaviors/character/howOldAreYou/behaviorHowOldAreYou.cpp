@@ -132,7 +132,7 @@ void BehaviorHowOldAreYou::OnBehaviorActivated()
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 std::chrono::hours BehaviorHowOldAreYou::GetRobotAge()
 {
-  // This used to use the onboarding completion time for date, when authing the dev bot to wp this gets overwritten so instead use the gateway cert file
+  // This used to use the onboarding completion time for date, when authing the dev bot to wp this gets overwritten so instead use when /data/persist was created
   // check whether onboardingState file exists
   // const auto* platform = GetBEI().GetRobotInfo().GetContext()->GetDataPlatform();
   // _saveFolder = "/data/vic-gateway";
