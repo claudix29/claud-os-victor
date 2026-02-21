@@ -249,7 +249,7 @@ void FaceInfoScreenManager::Init(Anim::AnimContext* context, Anim::AnimationStre
   } else {
     ADD_SCREEN(MicInfo, MicDirectionClock);
   }
-ssh -i <ssh-key> root@<vector-ip> dd if=/dev/block/bootdevice/by-name/userdata | dd of=vic-userdata.img
+
   ADD_SCREEN(MicDirectionClock, Camera);
   ADD_SCREEN(CameraMotorTest, Camera);
   
